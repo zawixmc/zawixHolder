@@ -610,8 +610,6 @@ function updateBotStatus() {
     })));
 }
 
-const os = require('os');
-
 function getLocalIP() {
     const interfaces = os.networkInterfaces();
     for (const name of Object.keys(interfaces)) {
