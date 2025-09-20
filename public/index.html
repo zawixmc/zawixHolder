@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zawixHolder - Bot Manager</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-robot"></i> zawixHolder</h1>
+            <p>Zaawansowany Manager Botów Minecraft</p>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" id="newBotBtn">
+                <i class="fas fa-plus"></i> Nowy Bot
+            </button>
+        </div>
+        
+        <div class="bots-grid" id="botsContainer">
+            <div class="empty-state">
+                <i class="fas fa-robot"></i>
+                <h2>Brak botów</h2>
+                <p>Kliknij "Nowy Bot" aby utworzyć swojego pierwszego bota</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="botModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2><i class="fas fa-robot"></i> Utwórz Nowego Bota</h2>
+            <form id="botForm">
+                <div class="form-group">
+                    <label for="botName">Nazwa Bota:</label>
+                    <input type="text" id="botName" required placeholder="np. MójBot123">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="serverHost">Serwer IP:</label>
+                        <input type="text" id="serverHost" required placeholder="np. play.hypixel.net">
+                    </div>
+                    <div class="form-group">
+                        <label for="serverPort">Port:</label>
+                        <input type="number" id="serverPort" value="25565" min="1" max="65535">
+                    </div>
+                </div>
+
+                <div class="security-section">
+                    <h3><i class="fas fa-lock"></i> Bezpieczeństwo</h3>
+                    <div class="form-group">
+                        <label for="botPassword">Hasło:</label>
+                        <input type="password" id="botPassword" required placeholder="Wprowadź hasło do bota">
+                    </div>
+                    <div class="version-info">
+                        <i class="fas fa-shield-alt"></i> 
+                        To hasło będzie wymagane do zarządzania tym botem (Start/Stop/Del/Log).
+                    </div>
+                </div>
+                
+                <div class="version-section">
+                    <h3><i class="fas fa-code-branch"></i> Wersja Minecraft</h3>
+                    <div class="form-group">
+                        <label for="minecraftVersion">Wybierz wersję:</label>
+                        <select id="minecraftVersion" required>
+                            <option value="auto">Auto (Wykryj Automatycznie)</option>
+                            <optgroup label="Najnowsze">
+								<option value="1.21.6">1.21.6</option>
+								<option value="1.21.5">1.21.5</option>
+                                <option value="1.21.4">1.21.4</option>
+                                <option value="1.21.3">1.21.3</option>
+								<option value="1.21.2">1.21.2</option>
+								<option value="1.21.1">1.21.1</option>
+                                <option value="1.21">1.21</option>
+                                <option value="1.20.6">1.20.6</option>
+                                <option value="1.20.4">1.20.4</option>
+                                <option value="1.20.2">1.20.2</option>
+                                <option value="1.20.1">1.20.1</option>
+                                <option value="1.20">1.20</option>
+                            </optgroup>
+                            <optgroup label="Poprzednie">
+                                <option value="1.19.4">1.19.4</option>
+                                <option value="1.19.3">1.19.3</option>
+                                <option value="1.19.2">1.19.2</option>
+                                <option value="1.19.1">1.19.1</option>
+                                <option value="1.19">1.19</option>
+                                <option value="1.18.2">1.18.2</option>
+                                <option value="1.18.1">1.18.1</option>
+                                <option value="1.18">1.18</option>
+                                <option value="1.17.1">1.17.1</option>
+                                <option value="1.17">1.17</option>
+                                <option value="1.16.5">1.16.5</option>
+                                <option value="1.16.4">1.16.4</option>
+                                <option value="1.16.3">1.16.3</option>
+                                <option value="1.16.2">1.16.2</option>
+                                <option value="1.16.1">1.16.1</option>
+                                <option value="1.16">1.16</option>
+                                <option value="1.15.2">1.15.2</option>
+                                <option value="1.15.1">1.15.1</option>
+                                <option value="1.15">1.15</option>
+                                <option value="1.14.4">1.14.4</option>
+                                <option value="1.14.3">1.14.3</option>
+                                <option value="1.14.2">1.14.2</option>
+                                <option value="1.14.1">1.14.1</option>
+                                <option value="1.14">1.14</option>
+                                <option value="1.13.2">1.13.2</option>
+                                <option value="1.13.1">1.13.1</option>
+                                <option value="1.13">1.13</option>
+                                <option value="1.12.2">1.12.2</option>
+                                <option value="1.12.1">1.12.1</option>
+                                <option value="1.12">1.12</option>
+                                <option value="1.11.2">1.11.2</option>
+                                <option value="1.11.1">1.11.1</option>
+                                <option value="1.11">1.11</option>
+                                <option value="1.10.2">1.10.2</option>
+                                <option value="1.10.1">1.10.1</option>
+                                <option value="1.10">1.10</option>
+                                <option value="1.9.4">1.9.4</option>
+                                <option value="1.9.3">1.9.3</option>
+                                <option value="1.9.2">1.9.2</option>
+                                <option value="1.9.1">1.9.1</option>
+                                <option value="1.9">1.9</option>
+                                <option value="1.8.9">1.8.9</option>
+                                <option value="1.8.8">1.8.8</option>
+                                <option value="1.8">1.8</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="version-info">
+                        <i class="fas fa-info-circle"></i> 
+                        <strong>Auto:</strong> Bot automatycznie wykryje wersję serwera (zalecane).<br>
+                        <strong>Konkretna wersja:</strong> Wymuś określoną wersję protokołu.
+                    </div>
+                </div>
+                
+                <div class="reconnect-section">
+                    <h3><i class="fas fa-sync-alt"></i> Reconnect</h3>
+                    <div class="form-group">
+                        <label for="reconnectInterval">Interwał reconnect (sekundy):</label>
+                        <input type="number" id="reconnectInterval" value="5" min="1" max="60" placeholder="5">
+                    </div>
+                </div>
+                
+                <div class="antiafk-section">
+                    <h3><i class="fas fa-shield-alt"></i> Anti-AFK</h3>
+                    <div class="switch-group">
+                        <span>Kucanie:</span>
+                        <label class="switch">
+                            <input type="checkbox" id="antiAfkCrouch">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="switch-group">
+                        <span>Skakanie:</span>
+                        <label class="switch">
+                            <input type="checkbox" id="antiAfkJump">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 25px; display: flex; gap: 10px;">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-check"></i> Utwórz Bota
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">
+                        <i class="fas fa-times"></i> Anuluj
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="passwordModal" class="modal">
+        <div class="modal-content password-modal-content">
+            <span class="close" id="passwordClose">&times;</span>
+            <h2><i class="fas fa-lock"></i> Wprowadź hasło</h2>
+            <p id="passwordPrompt">Wprowadź hasło do bota aby kontynuować:</p>
+            <div class="password-input">
+                <input type="password" id="passwordField" placeholder="Hasło do bota">
+            </div>
+            <div class="error-message" id="passwordError" style="display: none;"></div>
+            <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
+                <button class="btn btn-success" id="passwordConfirm">
+                    <i class="fas fa-check"></i> Potwierdź
+                </button>
+                <button class="btn btn-secondary" id="passwordCancel">
+                    <i class="fas fa-times"></i> Anuluj
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="logsModal" class="modal">
+        <div class="modal-content logs-modal-content">
+            <span class="close" id="logsClose">&times;</span>
+            <div class="logs-header">
+                <h2><i class="fas fa-file-alt"></i> Logi Bota: <span id="logsBotName"></span></h2>
+                <button class="btn clear-logs-btn" id="clearLogsBtn">
+                    <i class="fas fa-trash"></i> Wyczyść
+                </button>
+            </div>
+            <div class="logs-container" id="logsContainer">
+                <div style="text-align: center; opacity: 0.6; margin-top: 50px;">
+                    <i class="fas fa-file-alt" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>
+                    Brak logów do wyświetlenia
+                </div>
+            </div>
+            <div class="chat-input-section">
+                <div class="chat-input-header">
+                    <i class="fas fa-comment"></i> Chat
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" id="chatInput" placeholder="Wpisz wiadomość lub komende">
+                    <button class="btn btn-primary" id="sendChatBtn">
+                        <i class="fas fa-paper-plane"></i> Wyślij
+                    </button>
+                </div>
+                <div class="chat-input-info">
+                    <i class="fas fa-info-circle"></i> 
+                    Wiadomości pojawią się w logach
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        let bots = [];
+        let currentAction = null;
+        let currentBotId = null;
+        let currentBotLogs = [];
+        
+        console.log('Script loaded');
+        
+        const modal = document.getElementById('botModal');
+        const passwordModal = document.getElementById('passwordModal');
+        const logsModal = document.getElementById('logsModal');
+        const newBotBtn = document.getElementById('newBotBtn');
+        const closeBtn = document.querySelector('.close');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const botForm = document.getElementById('botForm');
+        
+        const passwordClose = document.getElementById('passwordClose');
+        const passwordField = document.getElementById('passwordField');
+        const passwordConfirm = document.getElementById('passwordConfirm');
+        const passwordCancel = document.getElementById('passwordCancel');
+        const passwordError = document.getElementById('passwordError');
+        const passwordPrompt = document.getElementById('passwordPrompt');
+
+        const logsClose = document.getElementById('logsClose');
+        const logsContainer = document.getElementById('logsContainer');
+        const logsBotName = document.getElementById('logsBotName');
+        const clearLogsBtn = document.getElementById('clearLogsBtn');
+
+        const chatInput = document.getElementById('chatInput');
+        const sendChatBtn = document.getElementById('sendChatBtn');
+        
+        console.log('Elements found:', {
+            modal: !!modal,
+            passwordModal: !!passwordModal,
+            logsModal: !!logsModal,
+            newBotBtn: !!newBotBtn,
+            closeBtn: !!closeBtn,
+            cancelBtn: !!cancelBtn,
+            botForm: !!botForm,
+            chatInput: !!chatInput,
+            sendChatBtn: !!sendChatBtn
+        });
+        
+        if (newBotBtn) {
+            newBotBtn.addEventListener('click', () => {
+                console.log('New bot button clicked');
+                modal.style.display = 'block';
+                document.getElementById('minecraftVersion').style.backgroundColor = '#2c3e50';
+            });
+        }
+        
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                console.log('Close button clicked');
+                modal.style.display = 'none';
+            });
+        }
+        
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', () => {
+                console.log('Cancel button clicked');
+                modal.style.display = 'none';
+            });
+        }
+
+        if (passwordClose) {
+            passwordClose.addEventListener('click', () => {
+                passwordModal.style.display = 'none';
+                currentAction = null;
+                currentBotId = null;
+            });
+        }
+
+        if (passwordCancel) {
+            passwordCancel.addEventListener('click', () => {
+                passwordModal.style.display = 'none';
+                currentAction = null;
+                currentBotId = null;
+            });
+        }
+
+        if (passwordConfirm) {
+            passwordConfirm.addEventListener('click', () => {
+                const password = passwordField.value;
+                if (!password) {
+                    showPasswordError('Hasło nie może być puste');
+                    return;
+                }
+                
+                if (currentAction && currentBotId) {
+                    executeActionWithPassword(currentAction, currentBotId, password);
+                }
+            });
+        }
+
+        if (passwordField) {
+            passwordField.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    passwordConfirm.click();
+                }
+            });
+        }
+
+        if (logsClose) {
+            logsClose.addEventListener('click', () => {
+                logsModal.style.display = 'none';
+            });
+        }
+
+        if (clearLogsBtn) {
+            clearLogsBtn.addEventListener('click', () => {
+                if (currentBotId) {
+                    socket.emit('clearLogs', currentBotId);
+                    currentBotLogs = [];
+                    renderLogs();
+                }
+            });
+        }
+
+        if (sendChatBtn) {
+            sendChatBtn.addEventListener('click', () => {
+                sendChatMessage();
+            });
+        }
+
+        if (chatInput) {
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendChatMessage();
+                }
+            });
+        }
+
+        function sendChatMessage() {
+            const message = chatInput.value.trim();
+            if (!message || !currentBotId) return;
+
+            socket.emit('sendBotMessage', {
+                botId: currentBotId,
+                message: message
+            });
+
+            chatInput.value = '';
+        }
+        
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                console.log('Modal overlay clicked');
+                modal.style.display = 'none';
+            } else if (event.target === passwordModal) {
+                passwordModal.style.display = 'none';
+                currentAction = null;
+                currentBotId = null;
+            } else if (event.target === logsModal) {
+                logsModal.style.display = 'none';
+            }
+        });
+        
+        if (botForm) {
+            botForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                console.log('Form submitted');
+                
+                const selectedVersion = document.getElementById('minecraftVersion').value;
+                const password = document.getElementById('botPassword').value;
+
+                if (!password) {
+                    alert('Hasło jest wymagane!');
+                    return;
+                }
+                
+                const config = {
+                    username: document.getElementById('botName').value,
+                    host: document.getElementById('serverHost').value,
+                    port: parseInt(document.getElementById('serverPort').value),
+                    version: selectedVersion === 'auto' ? 'auto' : selectedVersion,
+                    reconnectInterval: parseInt(document.getElementById('reconnectInterval').value) || 5,
+                    password: password,
+                    antiAfk: {
+                        crouch: document.getElementById('antiAfkCrouch').checked,
+                        jump: document.getElementById('antiAfkJump').checked
+                    }
+                };
+                
+                console.log('Bot config:', config);
+                socket.emit('createBot', config);
+                modal.style.display = 'none';
+                botForm.reset();
+            });
+        }
+        
+        socket.on('connect', () => {
+            console.log('Connected to server');
+        });
+        
+        socket.on('disconnect', () => {
+            console.log('Disconnected from server');
+        });
+        
+        socket.on('botsUpdate', (updatedBots) => {
+            console.log('Bots update received:', updatedBots);
+            bots = updatedBots;
+            renderBots();
+        });
+
+        socket.on('actionResult', (result) => {
+            if (result.success) {
+                passwordModal.style.display = 'none';
+                currentAction = null;
+                currentBotId = null;
+                passwordField.value = '';
+                passwordError.style.display = 'none';
+            } else {
+                showPasswordError(result.message || 'Nieprawidłowe hasło');
+            }
+        });
+
+        socket.on('botLogs', (data) => {
+            if (data.botId === currentBotId) {
+                currentBotLogs = data.logs;
+                renderLogs();
+            }
+        });
+
+        socket.on('newLogEntry', (data) => {
+            if (data.botId === currentBotId) {
+                currentBotLogs.push(data.entry);
+                renderLogs();
+                const container = document.getElementById('logsContainer');
+                container.scrollTop = container.scrollHeight;
+            }
+        });
+
+        socket.on('chatMessageSent', (data) => {
+            if (data.botId === currentBotId) {
+                if (data.success) {
+                } else {
+                    currentBotLogs.push({
+                        timestamp: Date.now(),
+                        type: 'error',
+                        message: `Błąd wysyłania wiadomości: ${data.error}`
+                    });
+                    renderLogs();
+                }
+            }
+        });
+
+        function showPasswordError(message) {
+            passwordError.textContent = message;
+            passwordError.style.display = 'block';
+        }
+
+        function showPasswordPrompt(action, botId, botName) {
+            currentAction = action;
+            currentBotId = botId;
+            passwordField.value = '';
+            passwordError.style.display = 'none';
+            
+            const actionText = {
+                start: 'uruchomić',
+                stop: 'zatrzymać', 
+                delete: 'usunąć',
+                logs: 'wyświetlić logi'
+            };
+            
+            passwordPrompt.textContent = `Wprowadź hasło do bota "${botName}" aby ${actionText[action]}:`;
+            passwordModal.style.display = 'block';
+            passwordField.focus();
+        }
+
+        function executeActionWithPassword(action, botId, password) {
+            socket.emit('botAction', {
+                action: action,
+                botId: botId,
+                password: password
+            });
+        }
+
+        function renderLogs() {
+            if (currentBotLogs.length === 0) {
+                logsContainer.innerHTML = `
+                    <div style="text-align: center; opacity: 0.6; margin-top: 50px;">
+                        <i class="fas fa-file-alt" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>
+                        Brak logów do wyświetlenia
+                    </div>
+                `;
+                return;
+            }
+
+            logsContainer.innerHTML = currentBotLogs.map(log => {
+                const time = new Date(log.timestamp).toLocaleString('pl-PL');
+                return `
+                    <div class="log-entry log-${log.type}">
+                        <div class="log-timestamp">${time}</div>
+                        <div>${log.message}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function renderBots() {
+            console.log('Rendering bots:', bots);
+            const container = document.getElementById('botsContainer');
+            
+            if (!container) {
+                console.error('Bots container not found');
+                return;
+            }
+            
+            if (bots.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-robot"></i>
+                        <h2>Brak botów</h2>
+                        <p>Kliknij "Nowy Bot" aby utworzyć swojego pierwszego bota</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = bots.map(bot => `
+                <div class="bot-card">
+                    <div class="bot-header">
+                        <div class="bot-name">
+                            <i class="fas fa-robot"></i> ${bot.name}
+                        </div>
+                        <div class="bot-status status-${bot.status}">
+                            ${getStatusText(bot.status)}
+                        </div>
+                    </div>
+                    <div class="bot-info">
+                        <div><i class="fas fa-server"></i> <strong>Serwer:</strong> ${bot.host}:${bot.port}</div>
+                        <div><i class="fas fa-plug"></i> <strong>Status:</strong> ${getStatusDescription(bot.status)}</div>
+                    </div>
+                    <div class="version-info-card">
+                        <strong><i class="fas fa-code-branch"></i> Wersja:</strong> ${getVersionText(bot.version)}
+                    </div>
+                    <div class="reconnect-info">
+                        <strong><i class="fas fa-sync-alt"></i> Reconnect:</strong> co ${bot.reconnectInterval || 5}s
+                    </div>
+                    <div class="antiafk-info">
+                        <strong><i class="fas fa-shield-alt"></i> Anti-AFK:</strong> ${getAntiAfkText(bot.antiAfk)}
+                    </div>
+                    <div class="bot-actions">
+                        ${bot.status === 'connected' || bot.status === 'connecting' 
+                            ? `<button class="btn btn-danger" onclick="requestBotAction('stop', '${bot.id}', '${bot.name}')">
+                                 <i class="fas fa-stop"></i> Stop
+                               </button>`
+                            : `<button class="btn btn-success" onclick="requestBotAction('start', '${bot.id}', '${bot.name}')">
+                                 <i class="fas fa-play"></i> Start
+                               </button>`
+                        }
+                        <button class="btn btn-info" onclick="requestBotAction('logs', '${bot.id}', '${bot.name}')">
+                            <i class="fas fa-file-alt"></i> Log
+                        </button>
+                        <button class="btn btn-secondary" onclick="requestBotAction('delete', '${bot.id}', '${bot.name}')">
+                            <i class="fas fa-trash"></i> Del
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function getStatusText(status) {
+            const statusMap = {
+                'connected': 'ONLINE',
+                'connecting': 'CONNECTING',
+                'disconnected': 'OFFLINE',
+                'error': 'OFFLINE',
+                'stopped': 'OFFLINE',
+                'kicked': 'OFFLINE'
+            };
+            return statusMap[status] || status;
+        }
+        
+        function getStatusDescription(status) {
+            const statusMap = {
+                'connected': 'Bot jest podłączony do serwera',
+                'connecting': 'Bot próbuje się połączyć...',
+                'disconnected': 'Bot nie jest połączony',
+                'error': 'Wystąpił błąd połączenia',
+                'stopped': 'Bot został zatrzymany przez użytkownika',
+                'kicked': 'Bot został wyrzucony z serwera'
+            };
+            return statusMap[status] || 'Nieznany status';
+        }
+        
+        function getVersionText(version) {
+            if (!version || version === 'auto') {
+                return 'Auto (wykryj automatycznie)';
+            }
+            return version;
+        }
+        
+        function getAntiAfkText(antiAfk) {
+            if (!antiAfk || (!antiAfk.crouch && !antiAfk.jump)) return 'Wyłączony';
+            
+            const features = [];
+            if (antiAfk.crouch) features.push('Kucanie');
+            if (antiAfk.jump) features.push('Skakanie');
+            return features.join(' + ');
+        }
+        
+        function requestBotAction(action, botId, botName) {
+            if (action === 'logs') {
+                showPasswordPrompt(action, botId, botName);
+            } else {
+                showPasswordPrompt(action, botId, botName);
+            }
+        }
+
+        socket.on('logsAccess', (data) => {
+            if (data.success) {
+                passwordModal.style.display = 'none';
+                currentBotLogs = data.logs;
+                logsBotName.textContent = data.botName;
+                renderLogs();
+                logsModal.style.display = 'block';
+            } else {
+                showPasswordError(data.message || 'Nieprawidłowe hasło');
+            }
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded, rendering initial state');
+            renderBots();
+        });
+    </script>
+
+    <style>
+        .chat-input-section {
+            border-top: 2px solid #34495e;
+            margin-top: 20px;
+            padding-top: 15px;
+        }
+
+        .chat-input-header {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ecf0f1;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .chat-input-container input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 2px solid #34495e;
+            border-radius: 6px;
+            background: #2c3e50;
+            color: #ecf0f1;
+            font-size: 14px;
+        }
+
+        .chat-input-container input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+
+        .chat-input-container input::placeholder {
+            color: #bdc3c7;
+        }
+
+        .chat-input-info {
+            font-size: 12px;
+            color: #95a5a6;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logs-modal-content {
+            width: 90%;
+            max-width: 900px;
+            height: 80vh;
+            max-height: 800px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logs-container {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 0;
+        }
