@@ -622,7 +622,7 @@ function getLocalIP() {
     return 'localhost';
 }
 
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 8000;
 const localIP = getLocalIP();
 
 server.listen(PORT, '0.0.0.0', () => {

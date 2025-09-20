@@ -1,6 +1,6 @@
 {
   "name": "zawixHolder",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "mineflayer Bot Manager",
   "main": "server.js",
   "scripts": {
